@@ -14,6 +14,7 @@ const initialState = {
   usePosts: null, //누가 몇개의 채팅을 작성했는지
 };
 
+//reducer를 이용하여 store를 생성
 export const chatRoomSlice = createSlice({
   name: "chatRoom",
   initialState, //초기상태
