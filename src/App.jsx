@@ -1,7 +1,8 @@
 import "./App.css";
-import ChatPage from "./pages/ChatPage";
-import LoginPage from "./pages/LoginPage";
-import ResistorPage from "./pages/ResistorPage";
+import { Routes, Route } from "react-router-dom";
+import ChatPage from "./pages/ChatPage/ChatPage";
+import LoginPage from "./pages/LoginPage/LoginPage";
+import ResistorPage from "./pages/ResistorPage/ResistorPage";
 
 function App() {
   return (
