@@ -2,9 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import app from "../../firebase";
 
 const ResistorPage = () => {
+  const auth = getAuth(app);
   const [loading, setLoading] = useState(false);
+  const [errorFromSubmit, setErrorFromSubmit] = useState("");
 
   const {
     register,
@@ -13,7 +17,25 @@ const ResistorPage = () => {
   } = useForm();
 
   //훅 폼에 제공되는 handleSubmit이 있음 -> onSubmit을 따로 만든다
-  const onSubmit = () => {};
+  const onSubmit = async (data) => {
+    try {
+      setLoading(true);
+      const createdUser = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      );
+      console.log(createdUser);
+    } catch (error) {
+      console.error(error);
+      setErrorFromSubmit(error.message);
+      setTimeout(() => {
+        setErrorFromSubmit("");
+      }, 3000);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="auth-wrapper">
@@ -68,6 +90,7 @@ const ResistorPage = () => {
           <p>Password must have at least 6 characters</p>
         )}
 
+        {errorFromSubmit && <p>{errorFromSubmit}</p>}
         <input type="submit" disabled={loading} />
 
         <Link to={"/"} style={{ color: "gray", textDecoration: "none" }}>
