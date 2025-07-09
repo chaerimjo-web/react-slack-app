@@ -2,8 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 import app from "../../firebase";
+import md5 from "md5";
 
 const ResistorPage = () => {
   const auth = getAuth(app);
@@ -26,6 +31,15 @@ const ResistorPage = () => {
         data.password
       );
       console.log(createdUser);
+
+      await updateProfile(auth.currentUser, {
+        displayName: data.name,
+        photoURL: `http://gravatar.com/avatar/${md5(
+          createdUser.user.email
+        )}?d=identicon`,
+      });
+
+      console.log(auth.currentUser);
     } catch (error) {
       console.error(error);
       setErrorFromSubmit(error.message);
