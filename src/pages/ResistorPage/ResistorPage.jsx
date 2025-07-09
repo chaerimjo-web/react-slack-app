@@ -2,12 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { ref, set } from "firebase/database";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import app from "../../firebase";
+import app, { db } from "../../firebase";
 import md5 from "md5";
 
 const ResistorPage = () => {
@@ -39,7 +40,10 @@ const ResistorPage = () => {
         )}?d=identicon`,
       });
 
-      console.log(auth.currentUser);
+      set(ref(db, `users/${createdUser.user.uid}`), {
+        name: createdUser.user.displayName,
+        image: createdUser.user.photoURL,
+      });
     } catch (error) {
       console.error(error);
       setErrorFromSubmit(error.message);
