@@ -11,7 +11,7 @@ import {
 import app, { db } from "../../firebase";
 import md5 from "md5";
 
-const ResistorPage = () => {
+const RegisterPage = () => {
   const auth = getAuth(app);
   const [loading, setLoading] = useState(false);
   const [errorFromSubmit, setErrorFromSubmit] = useState("");
@@ -58,7 +58,7 @@ const ResistorPage = () => {
   return (
     <div className="auth-wrapper">
       <div style={{ textAlign: "center" }}>
-        <h3>ResistorPage</h3>
+        <h3>Register</h3>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="email">Email </label>
@@ -111,7 +111,7 @@ const ResistorPage = () => {
         {errorFromSubmit && <p>{errorFromSubmit}</p>}
         <input type="submit" disabled={loading} />
 
-        <Link to={"/"} style={{ color: "gray", textDecoration: "none" }}>
+        <Link to={"/login"} style={{ color: "gray", textDecoration: "none" }}>
           이미 아이디가 있다면 ...
         </Link>
       </form>
@@ -119,4 +119,4 @@ const ResistorPage = () => {
   );
 };
 
-export default ResistorPage;
+export default RegisterPage;
